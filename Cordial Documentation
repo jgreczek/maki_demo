@@ -1,0 +1,55 @@
+Introduction:
+Maki is a humanoid robot with 6 servo motors to control the eyes, eye lids and head.
+Maki can be connected wireless using XBee. We control the Maki using ROS. 
+
+Getting the environment setup:
+Firstly, install ROS hydro on the system. Follow the steps here: http://wiki.ros.org/hydro/Installation/Ubuntu. 
+Ideal environment for Maki is Ubuntu 12.04 with ROS Hydro, as all the codes are written as per ROS Hydro. 
+Complete all the steps in the installation link. After the installation you need to create a ROS workspace for all your projects. 
+Follow the below link to create and manage workspace: http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment. 
+As we are using ROS Hydro, please follow the instructions for "rosbuild" and NOT "catkin" in all the ros tutorials and installation. 
+Go through the tutorials and learn ROS concepts. Learn about ROS nodes, topics, messages and how to run nodes, roslaunch and rosrun. 
+Once you have the idea of how everything works proceed ahead.
+
+Downloading the code:
+Get access to Gitorious repository and the usc_sar_expeditions. There are two branches- Master and Develop in the repo.
+The Develop branch contains all the code we need for cordial.
+In order to download the code you need to have a SSH key which is unique to each PC you use. 
+Generate a public SSH key by following the instructions on this link: 
+https://arunsag.wordpress.com/2009/07/04/getting-started-with-git-and-gitorious/
+Once you have the key, in gitorious go to Account settings >> manage keys >> Add key and paste the SSH key which you just generated.
+Once the key is setup, go to the usc_sar_expeditions copy the url for repository and in the linux terminal type:
+"git clone -b develop *URL*". This clones the repository's develop branch from the URL to the folder you are currently in.
+The usc_sar_expeditions folder contains the cordial code.
+
+Cordial:
+Cordial is an interface to Maki built by Elaine which is also used for dragonbot.
+Cordial has different ROS packages which help us connect to Maki and give instructions to it.
+install all the packages in the cordial using rosbuild. Go through the cordial_maki README file to connect to maki and operate maki using PyPose.
+PyPose is a GUI to control Maki in which all 6 motors can be controlled.
+Once you are familiar with the actions of Maki proceed to the next step.
+
+Running Maki:
+The maki_cordial_server node in cordial_maki/scripts, connects the Master to Maki and feeds any commands given by the user to Maki.
+The cordial_testing package is used to give actions to the maki_cordial_server node. A list of actions are defined in the maki_cordial_server in the behaviours variable.
+There is an action server defined in the maki_cordial_server which accepts the behaviour and the goal and whenever the test node feeds the action server with commands, 
+the server makes the Maki change its behaviour.
+
+Packages in Cordial:
+cordial_maki: As discussed above, this helps in controlling Maki and feeding behaviours to it.
+Commands: 1) for feeding actions:
+			 rosrun cordial_maki maki_cordial_server.py
+			 rosrun cordial_testing test.py
+			 or
+		  2) for GUI:
+		     cd cordial_maki/lib/Maki_pypose/pypose
+		     python PyPose.py
+cordial_sound: Initializes an audio player using the soundplay_node script. The test.py node is used to feed audio files to the player.
+Commands: rosrun cordial_sound soundplay_node.py
+          rosrun cordial_sound test.py
+cordial_testing: This package is to feed actions to Maki after the maki_cordial_server.py is running.
+
+Maki Demo:
+A seperate package has been created for the demo for maki which basically plays a sound and controls the maki behavior.
+Tutorial and usage directions for the demo are defined in the README of the package.
+
