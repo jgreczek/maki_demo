@@ -1,0 +1,5 @@
+<launch>
+        <arg name="file" />
+	<node pkg="cordial_sound" name="cor_snd_playing1" type="sub.py" args="$(arg file)" required="true"/>
+	<node pkg="maki_demo" name="cor_test" type="maki_test2.py"/>
+</launch>

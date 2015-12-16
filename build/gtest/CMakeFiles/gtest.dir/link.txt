@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -O2 -g   -shared -Wl,-soname,libgtest.so -o /home/tejasr/hydro_workspace/sandbox/maki_demo/lib/libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o -L/home/tejasr/hydro_workspace/sandbox/maki_demo/build/gtest/src -lpthread -Wl,-rpath,/home/tejasr/hydro_workspace/sandbox/maki_demo/build/gtest/src 

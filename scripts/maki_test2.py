@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+
+#Author: Tejas Ram
+
+
+import roslib; roslib.load_manifest('cordial_testing')
+import rospy, os, sys
+import actionlib
+import geometry_msgs.msg
+
+from tablet_manager import TabletManager
+from cordial_core.msg import *
+
+import os
+from csv import reader
+from random import random, choice
+def sleep(t):
+     try:
+        rospy.sleep(t)
+     except:
+        pass 
+
+time = 2
+behavior = "blink"
+
+class Test_Maki():
+   
+    def __init__(self):
+	global behavior
+	global time
+	ac = actionlib.SimpleActionClient("/CoRDial/Behavior", BehaviorAction)
+        rospy.sleep(2.0)
+	self.new_behavior_time = rospy.Time.now()
+	self.eye_gaze_time = rospy.Time.now()
+	self.blink_time = rospy.Time.now() + rospy.Duration(10)
+
+        while not rospy.is_shutdown():
+	    if rospy.Time.now() >= self.new_behavior_time:
+		behav = behavior
+		self.new_behavior_time = rospy.Time.now() + rospy.Duration(time)
+		# blink every 4 seconds?
+		self.blink_time = rospy.Time.now() + rospy.Duration(4)
+
+		ac.send_goal(BehaviorGoal(name=behav))
+		print "sent behavior: ", behav
+		sleep(time)		
+
+
+if __name__=="__main__":
+    rospy.init_node("face_relay")
+    Test_Maki()
+
