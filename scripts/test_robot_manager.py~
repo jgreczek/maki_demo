@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+#action supporting imports
+import roslib; roslib.load_manifest('cordial_testing'); roslib.load_manifest('cordial_sound')
+import rospy, os, sys
+import actionlib
+import geometry_msgs.msg
+#sound supporting imports
+from cordial_sound.msg import SoundRequest
+from cordial_sound.libsoundplay import SoundClient
+
+
+#robot_manager
+from robot_manager import RobotManager
+
+from tablet_manager import TabletManager
+from cordial_core.msg import *
+from std_msgs.msg import String
+
+import os
+from csv import reader
+from random import random, choice
+
+import threading
+import logging
+
+def sleep(t):
+     try:
+        rospy.sleep(t)
+     except:
+        pass 
+
+maki_sound_file = "1.wav"	# the sound file which the maki should play	
+maki_body_act = "blink"	# the action which maki should perform which should be listed in maki_cordial_server and maki.ppr
+loop_count = 3		# number of times the action must be repeated
+loop_time = 2		# the time interval between each action
+flag = 0
+
+if __name__=="__main__":
+    dm = RobotManager()
+    dm.say("test_sentence")
+    rospy.sleep(1.0)
+    #dm.load_phrases("phrases.yaml")
+    #dm.do("question")
+    #rospy.sleep(5.0)
+    #dm.do("surprise")
+    print "waiting..."

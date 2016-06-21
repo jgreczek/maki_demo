@@ -1,0 +1,25 @@
+Running on the tablet
+1. Make sure to change the local IP address depending on the machine you are running the httpserver
+2. Start the terminal and change workspace to the directory where your .html is
+3. Type in httpserver on the terminal
+4. Open a new terminal and run rosbridge server by typing roslaunch rosbridge_server rosbridge_websocket.launch
+5. Go to the computer browser and type in localhost:8080
+6. Choose the dressUp.html
+7. Open a new terminal and list all the ros topics that are currently running by typing rostopic list
+8. On the terminal where the rosbridge is running, it should say "1 clients total"
+9. Now go to the tablet browser and type in the local ip address on the browser (usually   	192.168.7.158) follow by :8080. Like this 192.168.7.158:8080
+10. Choose the dressUp.html
+11. On the terminal where the rosbridge is running, it should say "2 clients total"
+12. Play around with the dress up game
+13. After you are done press the orange button on the game
+14. Go to the computer terminal where you listed your rostopic 
+15. It should have a rostopic name called Dress_MAKI
+16. To see what message it publishes, type in rostopic echo /Dress_MAKI
+
+
+
+
+
+
+
+

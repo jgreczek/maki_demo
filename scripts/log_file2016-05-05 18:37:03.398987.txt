@@ -1,0 +1,10 @@
+2016-05-05 18:37:08.055533, 1462498628.06, Game_MAKI, Starting the dress up game!
+2016-05-05 18:37:08.076351, 1462498628.08, mouth_color, 2
+2016-05-05 18:37:41.873675, 1462498661.87, Game_MAKI, Dress,no hat,no face accessory,green mouth,no costume,regular shoes,no accessory
+2016-05-05 18:37:41.893400, 1462498661.89, mouth_color, 3
+2016-05-05 18:37:49.588929, 1462498669.59, Game_MAKI, Dress,no hat,no face accessory,blue mouth,no costume,regular shoes,no accessory
+2016-05-05 18:37:49.608925, 1462498669.61, mouth_color, 2
+2016-05-05 18:37:56.620991, 1462498676.62, Game_MAKI, Dress,no hat,no face accessory,blue mouth,no costume,regular shoes,no accessory
+2016-05-05 18:37:59.985393, 1462498679.99, Game_MAKI, Dress,no hat,no face accessory,blue mouth,no costume,regular shoes,no accessory
+2016-05-05 18:38:03.099801, 1462498683.1, Game_MAKI, Dress,no hat,no face accessory,red mouth,no costume,regular shoes,no accessory
+2016-05-05 18:38:03.124408, 1462498683.12, mouth_color, 1

@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String
+
+def talker():
+    pub = rospy.Publisher('viseme_command', String, queue_size=10)
+    rospy.init_node('talker', anonymous=True)
+    rate = rospy.Rate(0.1) # 10hz
+    while not rospy.is_shutdown():
+        hello_str = "1.wav,AA_OH:1,BH:3,CH:4,ZZ:7,OO:9"
+        #rospy.loginfo(hello_str)
+        pub.publish(hello_str)
+        rate.sleep()
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass

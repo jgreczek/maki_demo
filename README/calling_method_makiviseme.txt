@@ -1,0 +1,9 @@
+from cordial_maki import *
+#from cordial_face.msg import FaceRequest
+
+Maki_command = MakiCoRDialServer()
+Maki_command.play_viseme(...)
+
+Maki_test can listen to topic '/CoRDial/face' to get the request, including viseme name and speed
+
+

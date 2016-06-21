@@ -11,6 +11,7 @@ import roslib; roslib.load_manifest('cordial_testing'); roslib.load_manifest('co
 import rospy, os, sys
 import actionlib
 import geometry_msgs.msg
+from std_msgs.msg import Int8
 #sound supporting imports
 from cordial_sound.msg import SoundRequest
 from cordial_sound.libsoundplay import SoundClient
@@ -29,8 +30,8 @@ def sleep(t):
         pass 
 
 maki_sound_file = "1.wav"	# the sound file which the maki should play	
-maki_body_act = "eyeroll"	# the action which maki should perform which should be listed in maki_cordial_server and maki.ppr
-loop_count = 2		# number of times the action must be repeated
+maki_body_act = "blink"	# the action which maki should perform which should be listed in maki_cordial_server and maki.ppr
+loop_count = 3		# number of times the action must be repeated
 loop_time = 2		# the time interval between each action
 flag = 0
 
@@ -53,13 +54,13 @@ class Test_Maki():
 	    if rospy.Time.now() >= self.new_behavior_time:
 		behav = maki_body_act
 		self.new_behavior_time = rospy.Time.now() + rospy.Duration(loop_time)	
-		maki_body.send_goal(BehaviorGoal(name=behav))	# sending the behavior to maki
+		maki_body.send_goal(BehaviorGoal(behavior=behav))	# sending the behavior to maki, name changed to behavior by xuan, March 22th
 		print "sent behavior: ", behav
 		sleep(loop_time)		
 
 
 if __name__=="__main__":
-    
+
     # when actions are defined, the maki Test class is called
     if not maki_body_act == "" and maki_sound_file == "":
     	rospy.init_node("face_relay")
@@ -79,6 +80,7 @@ if __name__=="__main__":
     if not maki_sound_file == "" and not maki_body_act == "":
 	rospy.init_node('face_relay')
 	os.system("rospy.init_node('soundplay_test', anonymous = True)")
+	os.system("rospy.init_node('led_pub', anonymous = True)")
         soundhandle = SoundClient()
         rospy.sleep(1)
         soundhandle.stopAll()
@@ -86,7 +88,6 @@ if __name__=="__main__":
 	soundhandle.playWave(maki_sound_file)
 	Test_Maki()
         sleep(7)
-
 
 
 

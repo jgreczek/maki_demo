@@ -14,14 +14,15 @@ from cordial_core.msg import *
 import os
 from csv import reader
 from random import random, choice
+
 def sleep(t):
      try:
         rospy.sleep(t)
      except:
         pass 
 
-time = 2
-behavior = "blink"
+time = 5
+behavior = "asleep"
 
 class Test_Maki():
    
@@ -33,7 +34,7 @@ class Test_Maki():
 	self.new_behavior_time = rospy.Time.now()
 	self.eye_gaze_time = rospy.Time.now()
 	self.blink_time = rospy.Time.now() + rospy.Duration(10)
-
+	
         while not rospy.is_shutdown():
 	    if rospy.Time.now() >= self.new_behavior_time:
 		behav = behavior
@@ -41,8 +42,13 @@ class Test_Maki():
 		# blink every 4 seconds?
 		self.blink_time = rospy.Time.now() + rospy.Duration(4)
 
-		ac.send_goal(BehaviorGoal(name=behav))
+		ac.send_goal(BehaviorGoal(behavior=behav))
 		print "sent behavior: ", behav
+		if behavior == 'lookright':#tested by Xuan
+		    behavior = 'lookleft'
+		else:
+		    behavior = 'lookright'
+		
 		sleep(time)		
 
 

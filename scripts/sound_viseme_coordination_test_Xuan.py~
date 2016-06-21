@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+
+#action supporting imports
+import roslib; roslib.load_manifest('cordial_testing'); roslib.load_manifest('cordial_sound')
+import rospy, os, sys
+import actionlib
+import geometry_msgs.msg
+#sound supporting imports
+from cordial_sound.msg import SoundRequest
+from cordial_sound.libsoundplay import SoundClient
+
+from tablet_manager import TabletManager
+from cordial_core.msg import *
+from std_msgs.msg import String
+
+import os
+from csv import reader
+from random import random, choice
+
+import threading
+import logging
+
+def sleep(t):
+     try:
+        rospy.sleep(t)
+     except:
+        pass 
+
+maki_sound_file = "1.wav"	# the sound file which the maki should play	
+maki_body_act = "blink"	# the action which maki should perform which should be listed in maki_cordial_server and maki.ppr
+loop_count = 3		# number of times the action must be repeated
+loop_time = 2		# the time interval between each action
+flag = 0
+
+
+def virtual_mouth():
+    while not flag == 2:
+        if flag == 0:
+	    logging.debug('start_v')
+	    pub = rospy.Publisher('xxxxx', String, queue_size = 10)
+	    sleep(1)
+	    print 'Hello'
+	    pub.publish('Hello')
+	    sleep(2)
+	    print 'asfadsf'
+	    pub.publish('fuck')
+	    sleep(1)
+	    print 'aaaaaaaaaa'
+	    logging.debug('exit_v')
+
+if __name__=="__main__":
+    # when a sound file is defined it calls the soundplay_node
+    t1 = threading.Thread(name='mouth', target = virtual_mouth)
+
+    logging.debug('start_s')
+    flag = 0
+    t1.start()
+    for i in range(1,4):
+	rospy.init_node('soundplay_test', anonymous = True)    
+        soundhandle = SoundClient()
+        rospy.sleep(1)
+        soundhandle.stopAll()
+        print maki_sound_file
+        flag = 0
+        soundhandle.playWave(maki_sound_file)
+        flag = 1
+        sleep(7)
+    flag = 2
+    logging.debug('exit_s')

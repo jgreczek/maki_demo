@@ -228,6 +228,19 @@ doxygen/fast:
 .PHONY : doxygen/fast
 
 #=============================================================================
+# Target rules for targets named led_pub
+
+# Build rule for target.
+led_pub: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 led_pub
+.PHONY : led_pub
+
+# fast build rule for target.
+led_pub/fast:
+	$(MAKE) -f CMakeFiles/led_pub.dir/build.make CMakeFiles/led_pub.dir/build
+.PHONY : led_pub/fast
+
+#=============================================================================
 # Target rules for targets named rosbuild_clean-test-results
 
 # Build rule for target.
@@ -409,6 +422,30 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+scripts/led_pub.o: scripts/led_pub.cpp.o
+.PHONY : scripts/led_pub.o
+
+# target to build an object file
+scripts/led_pub.cpp.o:
+	$(MAKE) -f CMakeFiles/led_pub.dir/build.make CMakeFiles/led_pub.dir/scripts/led_pub.cpp.o
+.PHONY : scripts/led_pub.cpp.o
+
+scripts/led_pub.i: scripts/led_pub.cpp.i
+.PHONY : scripts/led_pub.i
+
+# target to preprocess a source file
+scripts/led_pub.cpp.i:
+	$(MAKE) -f CMakeFiles/led_pub.dir/build.make CMakeFiles/led_pub.dir/scripts/led_pub.cpp.i
+.PHONY : scripts/led_pub.cpp.i
+
+scripts/led_pub.s: scripts/led_pub.cpp.s
+.PHONY : scripts/led_pub.s
+
+# target to generate assembly for a file
+scripts/led_pub.cpp.s:
+	$(MAKE) -f CMakeFiles/led_pub.dir/build.make CMakeFiles/led_pub.dir/scripts/led_pub.cpp.s
+.PHONY : scripts/led_pub.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -426,6 +463,7 @@ help:
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"
+	@echo "... led_pub"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_clean-test-results"
@@ -442,6 +480,9 @@ help:
 	@echo "... tests"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... scripts/led_pub.o"
+	@echo "... scripts/led_pub.i"
+	@echo "... scripts/led_pub.s"
 .PHONY : help
 
 

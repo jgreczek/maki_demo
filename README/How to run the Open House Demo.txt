@@ -1,0 +1,31 @@
+How to run the demo for Robotics Open House 2016
+ 
+Each item on the list is a new terminal window:
+
+1. roscore
+
+2. cd CHLATabletGames-master
+   http-server
+
+3. roslaunch cordial_maki cordial_maki.launch (choose port USB0)
+
+4. roslaunch rosbridge_server rosbridge_websocket.launch (check this first if no response, just ctrl+c and restart)
+
+5. rosrun rosserial_python serial_node.py /dev/ttyACM0
+
+6. roscd cordial_core/scripts; rosrun cordial_core player.py _use_tts:=False _phrase_file:='phrase.yaml'
+
+7. rosrun maki_demo open_house_demo.py
+
+8. rosrun maki_demo motion_listener.py
+
+9. open the game on tablet 192.168.7.244:8080, the address can also be find in the http-server terminal
+
+10. go to the /index.html page so that Maki will wake up from sleepy state
+
+
+
+
+
+
+

@@ -1,0 +1,45 @@
+instruction of building a audio-viseme synchronization client-server system based on cordial_core cordial_tts and cordial_maki(or other robots)
+For testing purpose, just skip the 'explanations' session, and following the instruction from the 'setting' session.
+===============================================================
+Some explanations:
+1. use cordial_tts to generate executable audio files and .yaml viseme files
+rosrun cordial_tts gen_phrases.py ./(data_directory where output audio is stored) phrases.yaml(output data) script1.txt script2.txt ...(origin input phrase data)
+content form of scripti.txt:
+[phrase_id] text <other behaviors> text.
+behaviors include: blink, nod...
+and text words will be translated into viseme behavior and stored in the .yaml file
+
+Currently we only have one demo sentence, "This is a Maki test". The problem here is that the speech speed from ivona Ivy is too fast and the viseme can't follow that speed. Besides, the mouth shapes are still not good enough.
+
+2. mechanism of player and behavior server system:
+rosrun cordial_core player.py _use_tts:=False #start player server to provide .yaml file translation, audio file playing and on time text to speech transformation services, deliver behavior frames through goals to the <robot type>_cordial_server.py, which is the robot server part
+
+from robot_manager import RobotManager
+dm = RobotManager()#calling RobotManager object
+dm.say("phrase_id")#sending goal with phrase_id to the player server to execute target file
+
+the goal msg activate the execute call back function of player server, which start playing audio file and sending behavior msg to the <robot type>_cordial_server at the same time
+
+3. About the Arduino file, with more visemes added, a memory problem occurred during this process, which warns "Low memory available, stability problems may occur." It appears that the robot sometimes automatically loses the connection with the computer, and can't recover until I restart the robot. Need to figure out how to solve this problem. 
+===============================================================
+Basic settings and directory settings:
+1.in cordial_core:
+	1)/scripts/player.py: Assign string value "/CoRDial/" to the 'base_topic' variable.
+	Find -- PlayerServer(None, rospy.get_param("~use_tts")) in the last 3 line of the file, change it to -- PlayerServer("phrase.yaml", rospy.get_param("~use_tts"))
+        move phrase.yaml stored under maki_demo to cordial_core/scripts
+	find the last 2nd line in phrase.yaml -- 
+	file: /home/tejasr/hydro_workspace/sandbox/maki_demo/scripts/test_sentence.wav
+	set the directory to where you store the test_sentence.wav file, currently it's located under maki_demo/scripts directory.
+	2)/src/robot_manager.py: 
+	YOU DON'T NEED TO Assign string value "/CoRDial/" to the 'base_topic' variable HERE. Notice that 'robot_name' is the init parameter of the object 'RobotManager' 		who delivers the value of 'basic_topic', you will find the calling sentence -- dm = RobotManager("/CoRDial/") in 
+	maki_demo/scripts/test_tablet_listener_xuan_controller.py
+	3)/msg: Rebuild the cordial_core package after any modification of msg files 
+===============================================================
+Once we have everything connected, with .wav and .yaml files stored in the right place, we can execute the following commands:
+roscore
+rosrun cordial_sound soundplay_node.py
+rosrun cordial_maki maki_cordial_server.py
+roscd cordial_core/scripts (phrase.yaml file has to be stored here)
+rosrun cordial_core player.py _use_tts:=False
+roscd maki_demo/scripts (test_sentence.wav stored here)
+rosrun maki_demo test_tablet_listener_xuan_controller.py

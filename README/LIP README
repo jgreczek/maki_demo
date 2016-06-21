@@ -1,0 +1,40 @@
+The LED drivers and the code to control the arduino board are all written in the "arduino code" folder.
+
+Running the code:
+The arduino code is already installed in the board. Hence we only need to connect to the board serially and publish messages.
+use the command "rosrun rosserial_python serial_node.py /dev/ttyXXXX", where XXXX is the port number to which the arduino is connected to.
+This port number can be obtained from serial monitor or by just opening arduino software and seeing the right-bottom side of the window.
+In this particular PC, left USB port starts from /dev/ttyACM0 and right side starts from /dev/ttyUSB0.
+By running this command we have established a serial connection between board and ROS. Now we can publish any msg on "led_array" topic of typ Int8.
+
+Simplest way to publish is to run the command "rostopic pub led_array std_msgs/Int8 XX" where XX is the two digit integer. 
+Everytime we run this with different values, different face will be loaded on maki.
+
+Faces and color:
+The first digit in the two digits of msg defines the face and second digit defines the color.
+color:
+1-red
+2-blue
+3-green
+4-yellow
+5-purple
+6-white
+7-blank/dark
+
+mouth:
+1-D
+2-O
+3-smile 
+4-Smile curvy
+5-Big smile
+
+Giving any other number will lead to preset default values.
+
+Adding more faces and colors:
+We can add faces and colors in the arduino code. Open arduino IDE and go to "arduino code/maki-led-mouth-next/arduino/maki_led_mouth/maki_led_mouth.ino".
+Here we can add colors and faces in the given space accordingly.
+
+Integrating with maki demo:
+Once the rosserial serial_node is running and connection is established we just need to publish integers on the topic "led_array". 
+So in the maki_test node we can add lines to continuously publish integers of corresponding mouths and colors onto this topic.
+
