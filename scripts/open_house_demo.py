@@ -218,11 +218,11 @@ class maki_gaming:
 	    self.task = ['choose_introduction','choose_tutor']
 	elif element[0] == "vein chosen":
 	    self.task = ['choose_feedback']
-	elif element[0] == "Start CS2-ES1-Spray":
+	elif element[0] == "Start CS2-ES2-Spray":#Start CS2-ES2-Spray
 	    self.task = ['spray_introduction','spray_tutor']
 	elif element[0] == "spray finished":
 	    self.task = ['spray_feedback']
-	elif element[0] == "Start CS2-ES3-Insertion":
+	elif element[0] == "Start CS2-ES3-Insertion":#Start CS2-ES3-Insertion
 	    self.task = ['insertion_tutor']
 	elif element[0] == "Insertion finished":
 	    self.task = ['insertion_feedback']
@@ -243,7 +243,7 @@ class maki_gaming:
 	elif element[0] == "P5 taken":
 	    self.task = ['value_ivy']
 	elif element[0] == "Value finished":
-	    self.task = []
+	    self.task = self.task #do nothing here
 	elif element[0] == "Start pain anxiety":
 	    self.task = ['coping_introduction','coping_remind']
 	elif element[0] == "1-great" or element[0] == "2-okay" or element[0] == "3-average":
