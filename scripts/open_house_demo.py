@@ -49,6 +49,7 @@ class maki_gaming:
         self.dm = RobotManager()
 	self.lastColor = 1
 	self.currentColor = 1
+	self.positive_flag = False
 
         self.styleDict = {}
 	self.styleSet = {}
@@ -63,6 +64,9 @@ class maki_gaming:
 	self.game_listener = rospy.Subscriber(target_topic, String, callback = self.callback)
 	#self.speech_state_listener = rospy.Subscriber("speech_state", String, callback = self.callback2)
 	self.mouth_pub = rospy.Publisher('mouth_color', Int8, queue_size=10)
+
+
+	self.breath_count = 0
     #formal solution
     #styleSet['none'] = ['none','none','none','none','none']
     ###########################################################
@@ -170,6 +174,95 @@ class maki_gaming:
             self.task = ['sleep']
             request = ['sleep']
             return request
+	elif element[0] == "Start questionnaire": #new added July 1st, by Xuan for coping games processing 
+	    self.task = []
+	elif element[0] == "Questionnaire answers":
+	    self.task = []
+	elif element[0] == "Start CS1-Breathing":
+	    self.task = ['breathing_introduction','breathing_tutor']
+	elif element[0] == "Breath taken":#needed to be change to breath in/out
+	    self.task = []
+	elif element[0] == "Breath finished":
+	    self.task = []
+	elif element[0] == "Start EMS":
+	    self.task = ['breathing_feedback']
+	elif element[0] == "EMS-bad":
+	    self.task = ['negative']
+	elif element[0] == "EMS-average":
+	    self.task = ['neutral']
+	elif element[0] == "EMS-good":
+	    self.task = ['positive']
+	    self.positive_flag = True
+	elif element[0] == "Start EMS 2":
+	    self.task = ['rap_feedback']
+	elif element[0] == "EMS-bad2":
+	    self.task = ['negative2']
+	elif element[0] == "EMS-average2":
+	    self.task = ['neutral']
+	elif element[0] == "EMS-good2":
+	    self.task = ['positive2']
+	    self.positive_flag = True
+	elif element[0] == "Start EMS 3":
+	    self.task = ['value_feedback']
+	elif element[0] == "EMS-bad3":
+	    self.task = ['negative3']
+	    if self.positive_flag:
+		self.task.append('negative3_choice')
+	elif element[0] == "EMS-average3":
+	    self.task = ['neutral3']
+	    if self.positive_flag:
+		self.task.append('neutral3_choice')
+	elif element[0] == "EMS-good3":
+	    self.task = ['positive3']
+	elif element[0] == "Start CS2-ES1-Vein":
+	    self.task = ['choose_introduction','choose_tutor']
+	elif element[0] == "vein chosen":
+	    self.task = ['choose_feedback']
+	elif element[0] == "Start CS2-ES1-Spray":
+	    self.task = ['spray_introduction','spray_tutor']
+	elif element[0] == "spray finished":
+	    self.task = ['spray_feedback']
+	elif element[0] == "Start CS2-ES3-Insertion":
+	    self.task = ['insertion_tutor']
+	elif element[0] == "Insertion finished":
+	    self.task = ['insertion_feedback']
+	elif element[0] == "Start CS2-ES4-Gauze":
+	    self.task = ['rap_introduction','rap_tutor']
+	elif element[0] == "Gauze finished":
+	    self.task = []
+	elif element[0] == "Start value reminder":
+	    self.task = ['value_introduction','value_tutor']
+	elif element[0] == "P1 taken":
+	    self.task = ['value_you']
+	elif element[0] == "P2 taken":
+	    self.task = ['value_family']
+	elif element[0] == "P3 taken":
+	    self.task = ['value_reason']
+	elif element[0] == "P4 taken":
+	    self.task = ['value_doctor']
+	elif element[0] == "P5 taken":
+	    self.task = ['value_ivy']
+	elif element[0] == "Value finished":
+	    self.task = []
+	elif element[0] == "Start pain anxiety":
+	    self.task = ['coping_introduction','coping_remind']
+	elif element[0] == "1-great" or element[0] == "2-okay" or element[0] == "3-average":
+	    self.task = ['coping_thanks1','coping_game_index','coping_next']
+	elif element[0] == "4-little-anxious" or element[0] == "5-anxious" or element[0] == "6-very-anxious":
+	    self.task = ['coping_thanks2','coping_game_index','coping_next']
+	elif element[0] == "Start pain anxiety 2":
+	    self.task = ['end_thank','end_feel']
+	elif element[0] == "1-great2" or element[0] == "2-okay2" or element[0] == "3-average2":
+	    self.task = ['coping_thanks1','end_encourage']
+	elif element[0] == "4-little-anxious2" or element[0] == "5-anxious2" or element[0] == "6-very-anxious2":
+	    self.task = ['coping_thanks2','end_encourage']
+	elif element[0] == "end":# needed to be added in the end.html page
+	    self.task = ['end']
+	
+
+	
+	
+	
 
 #    elif element[0] == "xray":#don't need this part temporarily
 	#print 'xray'
