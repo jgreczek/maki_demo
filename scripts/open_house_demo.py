@@ -53,14 +53,19 @@ class maki_gaming:
 
         self.styleDict = {}
 	self.styleSet = {}
-    	self.styleMap = ['none','astronaut','clown','wizard','dinosaur']
+    	self.styleMap = ['none','astronaut','clown','wizard','dinosaur','animal','doctor','surgeon','teacher']#newly added 'animal','doctor','surgeon','teacher'
         self.colorTask = 1
     #temporary solution # 0 hat, 1 eyes, 2 glasses, 3 clothing, 4 shoes, 5 acc
 	self.styleSet['none'] = ['no hat', 'no face accessory','no costume','regular shoes','no accessory']
     	self.styleSet['astronaut'] = ["astrounaut helmet","astronaut face accessory","astronaut costume","astronaut shoes","a flag"]
     	self.styleSet['clown'] = ["clown hat","clown face","clown costume","clown shoes","a horn"]
     	self.styleSet['wizard'] = ["wizard hat","wizard eye","wizard costume","wizard shoes","a wand"]
-	self.styleSet['dinosaur'] = ['dinosaur hat', 'no face accessory','dinosaur costume','dinosaur shoes','a mini dinosaur']
+	self.styleSet['dinosaur'] = ['dinosaur hat', 'dino sunglasses','dinosaur costume','dinosaur shoes','a mini dinosaur']
+	self.styleSet['animal'] = ['animal hat','animal face','animal costume','animal shoes','a piece of meat']
+	self.styleSet['doctor'] = ['doctor hat','doctor face accessory','doctor costume','doctor shoes','a document']
+	self.styleSet['surgeon'] = ['surgeon hat','surgeon face accessory','surgeon costume','surgeon shoes','a surgeon document']
+	self.styleSet['teacher'] = ['teacher hat','teacher sunglasses','teacher costume','teacher shoes','an apple']
+
 	self.game_listener = rospy.Subscriber(target_topic, String, callback = self.callback)
 	#self.speech_state_listener = rospy.Subscriber("speech_state", String, callback = self.callback2)
 	self.mouth_pub = rospy.Publisher('mouth_color', Int8, queue_size=10)
@@ -76,7 +81,7 @@ class maki_gaming:
     	    for clothes in self.styleSet[elem]:		
    	         self.styleDict[clothes] = elem 
 
-        self.styleDict['no face accessory'] = ['none','dinosaur'] 
+        self.styleDict['no face accessory'] = 'none'
 		
 
 #    Xray Game
@@ -96,10 +101,12 @@ class maki_gaming:
     	rand = 'rand'
     	_and = 'and'
 
-    #styleCounter = {'none':0,'astronaut':0,'clown':0,'wizard':0,'dinosaur':0,'animal':0,'doctor':0,'surgeon':0,'teacher':0}
-    	styleCounter = {'none':0,'astronaut':0,'clown':0,'wizard':0,'dinosaur':0}
+    	styleCounter = {'none':0,'astronaut':0,'clown':0,'wizard':0,'dinosaur':0,'animal':0,'doctor':0,'surgeon':0,'teacher':0}
+    	#styleCounter = {'none':0,'astronaut':0,'clown':0,'wizard':0,'dinosaur':0}
         color = {'red mouth':1,'blue mouth':2,'green mouth':3}
 	colorName = {'red mouth':'red','blue mouth':'blue','green mouth':'green'}
+	#color = {'red mouth':1,'blue mouth':2,'green mouth':3,'cyan mouth':4,'yello mouth':5,'magenta mouth':6}
+	#colorName = {'red mouth':'red','blue mouth':'blue','green mouth':'green','cyan mouth':'cyan','yello mouth':'yellow','magenta mouth':'magenta'}
     	element = text.split(',')
     	element[len(element) - 1] = element[len(element) - 1].strip('\n')
     ############################
@@ -137,11 +144,12 @@ class maki_gaming:
                     counter = 0
                     return element
 	    for elem in request:
-		if elem == 'no face accessory':
-		    styleCounter[self.styleDict[elem][0]] += 1
-		    styleCounter[self.styleDict[elem][1]] += 1
-                else:
-	            styleCounter[self.styleDict[elem]] += 1
+		styleCounter[self.styleDict[elem]] += 1
+		#if elem == 'no face accessory':
+		#    styleCounter[self.styleDict[elem][0]] += 1
+		#    styleCounter[self.styleDict[elem][1]] += 1
+                #else:
+	        #    styleCounter[self.styleDict[elem]] += 1
 	
 	    for style in styleCounter.keys():
 	        if styleCounter[style] > 2:
@@ -180,8 +188,10 @@ class maki_gaming:
 	    self.task = []
 	elif element[0] == "Start CS1-Breathing":
 	    self.task = ['breathing_introduction','breathing_tutor']
-	elif element[0] == "Breath taken":#needed to be change to breath in/out
-	    self.task = []
+	elif element[0] == "Breath in":#needed to be change to breath in/out #changed 7.28
+	    self.task = ['breathing_in']
+	elif element[0] == "Breath out":#needed to be change to breath in/out changed 7.28
+	    self.task = ['breathing_out']
 	elif element[0] == "Breath finished":
 	    self.task = []
 	elif element[0] == "Start EMS":
